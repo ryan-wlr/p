@@ -13,7 +13,7 @@ idx = pd.to_datetime(datestrs + [None])
 #dtype: datetime64[minute]
 #print(df)
 
-
+np.set_printoptions(precision=3)
 a = pd.read_csv('challenge_30-days_sofar_20210530_atlantic_sample.csv', header=None)
 
 c = np.array(a)
@@ -52,12 +52,19 @@ y[0:51888,1] = c[1:51889,8]
 y[0:51888,2] = c[1:51889,9]
 y[0:51888,0] = v[0:51888]
 print(y)
-a = np.arange(51889).reshape(51889,1)
+
+a = np.arange(103778).reshape(51889,2)
+b = np.arange(51889).reshape(51889,1)
 
 for x in range(51888):
     a[x] = y[x+1,0]-y[x,0]
-    
-print(a[:])
+    a[x] = a[x] + x  
+
+
+for x in range(51888):
+    a[x,1] = np.sqrt((np.square((y[x+1,1]-y[x,1])) + np.square((y[x+1,2]-y[x,2]))))
+     
+print(a[:,1])
 np.savetxt("foo.csv", a, delimiter=",")
 '''
 s1 = pd.Series([0, 1, 2 ,3], index=['a','b','c','d'])
